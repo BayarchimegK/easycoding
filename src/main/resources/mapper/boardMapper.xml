@@ -5,7 +5,7 @@
 <mapper namespace="com.easycoding.myjava.mapper.BoardMapper">
 
     <select id="selectBoardList" parameterType="com.easycoding.myjava.entity.board.BoardVo" resultType="com.easycoding.myjava.entity.board.BoardVo">
-        select * from Board
+        select * from board
     </select>
 
     <insert id="createBoard" parameterType="com.easycoding.myjava.entity.board.BoardVo">

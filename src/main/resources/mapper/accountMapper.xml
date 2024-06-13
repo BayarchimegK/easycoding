@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easycoding.myjava.mapper.AccountMapper">
+
+    <select id="getAccountsDetails" parameterType="com.easycoding.myjava.entity.account.AccountVo"
+            resultType="com.easycoding.myjava.entity.account.AccountVo">
+        select * from account
+    </select>
+    <insert id="createNewAccount" parameterType="com.easycoding.myjava.entity.account.AccountVo">
+        insert into account
+        (
+        username,
+        firstname,
+        lastname,
+        email,
+        reg_date,
+        upd_date
+        )
+        VALUES
+        (
+        #{username},
+        #{firstname},
+        #{lastname},
+        #{email},
+        NOW(),
+        NOW()
+        )
+    </insert>
+    <delete id="deleteOldAccounts" parameterType="com.easycoding.myjava.entity.account.AccountVo">
+        delete
+        from account
+        where userId in (
+        <foreach collection="userIdList" item="arr" separator=",">
+            #{arr}
+        </foreach>
+        )
+    </delete>
+    <select id="getSelectedAccountsDetails" parameterType="com.easycoding.myjava.entity.account.AccountVo" resultType="com.easycoding.myjava.entity.account.AccountVo">
+        select * from account where userId = #{selectedUserId}
+    </select>
+    <update id="updateAccountDetails" parameterType="com.easycoding.myjava.entity.account.AccountVo">
+        update account set
+        username = #{username}
+        ,lastname = #{lastname}
+        ,firstname = #{firstname}
+        ,email = #{email}
+        ,upd_date = NOW()
+        where userId = #{userId}
+    </update>
+</mapper>
