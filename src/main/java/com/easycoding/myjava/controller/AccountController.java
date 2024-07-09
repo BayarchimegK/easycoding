@@ -6,37 +6,35 @@ import com.easycoding.myjava.service.AccountService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/account")
 @Tag(name = "Account")
 public class AccountController {
     @Autowired
     AccountService accountService;
-    @RequestMapping(value="/account/data")
-    public List<AccountVo> getAccountsDetails(AccountVo accountVo, HttpServletRequest request) throws Exception{
-        List<AccountVo> accountList = accountService.getAccountsDetails(accountVo);
 
-        return accountList;
+    @GetMapping(value = "/data")
+    public List<AccountVo> getAccountsDetails(AccountVo accountVo, HttpServletRequest request) throws Exception{
+        return accountService.getAccountsDetails(accountVo);
     }
-    @RequestMapping(value="/account/create")
-    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value="/create")
     public JsonResult createNewAccount(@RequestBody AccountVo accountVo, HttpServletRequest request) throws Exception{
         return  accountService.createNewAccount(accountVo, request);
     }
-    @RequestMapping(value="/account/delete")
+    @DeleteMapping(value="/delete")
     public JsonResult deleteOldAccounts(@RequestBody AccountVo accountVo, HttpServletRequest request) throws Exception{
         return  accountService.deleteOldAccounts(accountVo, request);
     }
-    @RequestMapping(value="/account/detail")
+    @GetMapping(name="/detail")
     public AccountVo getSelectedAccountDetails(@RequestBody AccountVo accountVo, HttpServletRequest request) throws Exception{
         return  accountService.getSelectedAccountDetails(accountVo, request);
     }
-    @RequestMapping(value="/account/update")
+    @PostMapping(value = "/update")
     public JsonResult updateAccountDetails(@RequestBody AccountVo accountVo, HttpServletRequest request) throws Exception{
         return  accountService.updateAccountDetails(accountVo, request);
     }
